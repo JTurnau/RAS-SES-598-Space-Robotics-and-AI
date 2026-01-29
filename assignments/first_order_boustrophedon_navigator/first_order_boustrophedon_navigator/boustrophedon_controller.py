@@ -19,10 +19,10 @@ class BoustrophedonController(Node):
         self.declare_parameters(
             namespace='',
             parameters=[
-                ('Kp_linear', 5.0015),
-                ('Kd_linear', 0.3440),
-                ('Kp_angular', 9.2992),
-                ('Kd_angular', 0.1000),
+                ('Kp_linear', 5.0),
+                ('Kd_linear', 1.5),
+                ('Kp_angular', 10.0),
+                ('Kd_angular', 0.0),
                 ('spacing', 0.5)
             ]
         )
@@ -61,6 +61,9 @@ class BoustrophedonController(Node):
         # Create control loop timer
         self.timer = self.create_timer(0.1, self.control_loop)
         
+	# Store maximum cross track error
+        self.max_ct_error = 0
+
         # Add publisher for cross-track error
         self.error_pub = self.create_publisher(
             Float64, 
@@ -132,7 +135,9 @@ class BoustrophedonController(Node):
             self.get_logger().info('Lawnmower pattern complete')
             if self.cross_track_errors:
                 final_avg_error = sum(self.cross_track_errors) / len(self.cross_track_errors)
+                max_ct_error = max(self.cross_track_errors)
                 self.get_logger().info(f'Final average cross-track error: {final_avg_error:.3f}')
+                self.get_logger().info(f'Final max cross-track error: {max_ct_error:.3f}')
             self.timer.cancel()
             self.plot_data()
             return
