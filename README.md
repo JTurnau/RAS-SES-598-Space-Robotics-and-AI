@@ -1,4 +1,3 @@
-Demo code and assignments for RAS-598 Space Robotics and AI will be posted here. 
+My results and analysis are contained within this LaTeX doc:
 
-Course website: https://deepgis.org/dreamslab/ses598/
-
+https://www.overleaf.com/read/myqhmwkbyjxm#b78ac2
